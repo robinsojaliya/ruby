@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Robin ❤️ Ruby</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;font-family:Georgia,serif;color:#f8ead6}
+body{background:#09060b}
+body::before{
+ content:"";
+ position:fixed;inset:0;
+ background:url("https://drive.google.com/file/d/1ftsSPcvgpC5llQ9IvPoT1l-LAcPIyGMN/view?usp=drive_link") center/cover no-repeat;
+ opacity:0;
+ filter:blur(2px);
+ transform:scale(1.08);
+ transition:opacity 3s ease;
+ z-index:-3;
+}
+body.show-photo::before{opacity:.45;}
+body::after{
+ content:"";position:fixed;inset:0;
+ background:radial-gradient(circle at top,rgba(70,30,40,.45),rgba(10,8,12,.88));
+ z-index:-2;
+}
+#bg{position:fixed;inset:0;overflow:hidden;z-index:-1}
+.star,.petal{position:absolute}
+.star{width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 2.5s infinite alternate}
+@keyframes twinkle{to{opacity:.2;transform:scale(2)}}
+.petal{font-size:24px;animation:fall linear infinite}
+@keyframes fall{from{transform:translateY(-10vh) rotate(0)}to{transform:translateY(110vh) rotate(360deg)}}
+.scene{display:none;height:100%;align-items:center;justify-content:center;padding:20px}
+.scene.active{display:flex}
+.card{max-width:900px;background:rgba(48,28,24,.72);padding:34px;border-radius:18px;border:1px solid #caa86d;text-align:center}
+button{padding:12px 24px;border:none;border-radius:999px;background:#8c2246;color:#fff;margin:8px;cursor:pointer}
+#no{background:#ddd;color:#222}
+#final{font-size:1.3rem;text-align:center}
+.fadein{animation:fade 3s}@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* Romantic intro */
+#introOverlay{
+position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+flex-direction:column;
+background:radial-gradient(circle,#3b1622,#0b0810);
+z-index:9999;
+transition:opacity 2s;
+}
+#moon{
+width:170px;height:170px;border-radius:50%;
+background:#fff8d8;
+box-shadow:0 0 60px #fff3b0;
+margin-bottom:30px;
+animation:moonGlow 3s ease-in-out infinite alternate;
+}
+#quote{
+font-size:2rem;
+text-align:center;
+max-width:700px;
+opacity:0;
+animation:fadeUp 3s forwards 1s;
+}
+#beginBtn{
+margin-top:40px;
+padding:15px 34px;
+font-size:1.1rem;
+background:linear-gradient(45deg,#b71c52,#f6c177);
+color:white;
+border:none;
+border-radius:40px;
+cursor:pointer;
+box-shadow:0 0 25px rgba(255,180,120,.5);
+animation:pulse 2s infinite;
+}
+@keyframes pulse{
+50%{transform:scale(1.08);}
+}
+@keyframes moonGlow{
+to{box-shadow:0 0 110px #fff3b0;}
+}
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+
+/* ===== Romantic global animations ===== */
+.scene{animation:sceneFade .9s ease;}
+@keyframes sceneFade{from{opacity:0;transform:translateY(30px) scale(.98)}to{opacity:1;transform:none}}
+
+.card{
+ backdrop-filter: blur(8px);
+ box-shadow:0 0 35px rgba(255,170,170,.15);
+ animation:floatCard 5s ease-in-out infinite;
+}
+@keyframes floatCard{
+ 50%{transform:translateY(-8px);}
+}
+
+.card h1{
+ animation:titleGlow 3s ease-in-out infinite alternate;
+}
+@keyframes titleGlow{
+ from{text-shadow:0 0 8px rgba(255,220,170,.2);}
+ to{text-shadow:0 0 20px rgba(255,220,170,.9),0 0 35px rgba(255,120,160,.5);}
+}
+
+button{
+ transition:.35s;
+ box-shadow:0 0 15px rgba(255,120,160,.35);
+}
+button:hover{
+ transform:scale(1.08);
+ box-shadow:0 0 35px rgba(255,160,190,.8);
+}
+
+.firefly{
+ position:fixed;
+ width:6px;height:6px;border-radius:50%;
+ background:#ffe88c;
+ box-shadow:0 0 15px #ffe88c;
+ opacity:.8;
+ animation:fireflyMove linear infinite;
+ pointer-events:none;
+}
+@keyframes fireflyMove{
+ from{transform:translateY(100vh) translateX(0)}
+ to{transform:translateY(-20vh) translateX(120px)}
+}
+
+.heartFloat{
+ position:fixed;
+ color:#ff6b9a;
+ pointer-events:none;
+ animation:heartRise 3s linear forwards;
+}
+@keyframes heartRise{
+ from{opacity:0;transform:translateY(0) scale(.5)}
+ 20%{opacity:1}
+ to{opacity:0;transform:translateY(-120px) scale(1.5)}
+}
+
+</style>
+</head>
+<body>
+<audio id="bgm" loop><source src="https://drive.google.com/file/d/1TptVQBGsMTgq0LrJbCm1hONs4RuTz-B_/view?usp=drive_link" type="audio/mpeg"></audio>
+<div id="bg"></div>
+
+<div id="introOverlay">
+<div id="moon"></div>
+<div id="quote">
+<h1 style="color:#ffdca7;">For My Ruby ❤️</h1>
+<p>
+Every star has its own light...<br>
+But among millions of stars,<br>
+<strong>you became my moon.</strong>
+</p>
+<button id="beginBtn" onclick="beginExperience()">Begin Our Journey 🌹</button>
+</div>
+</div>
+
+
+<div class="scene active" id="s1"><div class="card">
+<h1>✉️ A Letter For My Ruby</h1>
+<p>Click below to begin our little journey.</p>
+<button onclick="start()">Open My Letter ❤️</button>
+</div></div>
+
+<div class="scene" id="s2"><div class="card">
+<h1>Chapter One</h1>
+<p>You turned ordinary moments into memories I'll cherish forever.</p>
+<button onclick="show(3)">Next</button></div></div>
+
+<div class="scene" id="s3"><div class="card">
+<h1>Chapter Two</h1>
+<p>Every dream of my future somehow has you smiling beside me.</p>
+<button onclick="show(4)">Continue</button></div></div>
+
+<div class="scene" id="s4"><div class="card">
+<h1>❤️ One More Thing...</h1>
+<div style="text-align:left;line-height:1.7">
+Before I ask you the most important question of my life, there's something I need to say.<br><br>
+I'm sorry if I've ever been too clingy, too possessive, over loving you, or being too emotional about you.<br><br>
+Sometimes my love becomes so overwhelming that I worry too much, miss you too much, and want to spend every possible moment with you. I never want my love to make you feel pressured or uncomfortable.<br><br>
+It never came from a lack of trust. It came from the fear of losing someone who means the world to me.<br><br>
+I'm learning that real love means trusting you, respecting your space, supporting your dreams, and loving you in a way that makes you feel safe and free.<br><br>
+Thank you for loving me despite my imperfections. Thank you for helping me become a better man.
+</div>
+<button onclick="show(5)">Thank You ❤️</button>
+</div></div>
+
+<div class="scene" id="s5"><div class="card">
+<h1>💍 My Forever Question</h1>
+<p>Ruby...<br><br>Will you marry me and let us write the rest of our story together?</p>
+<button onclick="yes()">Yes ❤️</button>
+<button id="no" onclick="moveNo()">Not Yet 😄</button>
+</div></div>
+
+<div class="scene" id="s6"><div id="final" class="fadein">
+<h1>🌹 She Said Yes 🌹</h1>
+<h2>Robin ❤️ Ruby</h2>
+<p>Every love story is beautiful...<br><br><strong>But ours is my favorite.</strong></p>
+<p>A new chapter begins today.</p>
+</div></div>
+
+<script>
+const bg=document.getElementById('bg');
+for(let i=0;i<170;i++){let s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';bg.appendChild(s);}
+function show(n){document.querySelectorAll('.scene').forEach(x=>x.classList.remove('active'));document.getElementById('s'+n).classList.add('active');}
+function start(){document.getElementById('bgm').play().catch(()=>{});show(2);}
+function beginExperience(){
+ document.getElementById('bgm').play().catch(()=>{});
+ const ov=document.getElementById('introOverlay');
+ ov.style.opacity='0';
+ setTimeout(()=>{
+   ov.remove();
+   show(1);
+ },1800);
+}
+
+function moveNo(){const b=document.getElementById('no');b.style.position='relative';b.style.left=(Math.random()*220-110)+'px';b.style.top=(Math.random()*80-40)+'px';}
+function yes(){
+ show(6);
+ document.body.classList.add("show-photo");
+ for(let i=0;i<500;i++){
+  setTimeout(()=>{
+   const r=document.createElement("div");
+   r.className="petal";
+   r.innerHTML=["🌹","🌹","🌹","🌺","💖","✨"][Math.floor(Math.random()*6)];
+   r.style.left=Math.random()*100+"vw";
+   r.style.top="-60px";
+   r.style.fontSize=(22+Math.random()*28)+"px";
+   r.style.animationDuration=(5+Math.random()*5)+"s";
+   document.body.appendChild(r);
+   setTimeout(()=>r.remove(),10000);
+  },i*25);
+ }
+}
+
+// fireflies
+for(let i=0;i<18;i++){
+ const f=document.createElement('div');
+ f.className='firefly';
+ f.style.left=Math.random()*100+'vw';
+ f.style.bottom='-20px';
+ f.style.animationDuration=(10+Math.random()*10)+'s';
+ f.style.animationDelay=(Math.random()*10)+'s';
+ document.body.appendChild(f);
+}
+// hearts on button hover
+document.addEventListener('mouseover',e=>{
+ if(e.target.tagName==='BUTTON'){
+   for(let i=0;i<5;i++){
+    const h=document.createElement('div');
+    h.className='heartFloat';
+    h.textContent='❤';
+    const r=e.target.getBoundingClientRect();
+    h.style.left=(r.left+r.width/2+(Math.random()*40-20))+'px';
+    h.style.top=(r.top+10)+'px';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+   }
+ }
+});
+
+// typewriter for paragraphs in scenes (except final)
+function typeScene(scene){
+ scene.querySelectorAll('p').forEach(p=>{
+   if(p.dataset.done) return;
+   const txt=p.innerHTML;
+   p.dataset.done=1;
+   p.innerHTML='';
+   let i=0;
+   const t=setInterval(()=>{
+      p.innerHTML=txt.slice(0,i++);
+      if(i>txt.length) clearInterval(t);
+   },18);
+ });
+}
+
+const oldShow=show;
+show=function(n){
+ oldShow(n);
+ const sc=document.getElementById('s'+n);
+ if(n!==6) typeScene(sc);
+}
+
+</script>
+</body>
+</html>
